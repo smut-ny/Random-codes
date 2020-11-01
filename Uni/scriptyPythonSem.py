@@ -272,3 +272,47 @@ GetTokenInfo("Pes")
 GetTokenInfo("Radar")
 GetTokenInfo("Žemle")
 GetTokenInfo("Louno")
+
+#14) Vytvořte vlastní funkci MujStringCompare(a, b), která po jednotlivých znacích otestuje, zda jsou dva textové řetězce stejné. Pokud jsou stejné, funkce vrací True, jinak False
+def MujStringCompare(a, b):
+  if a == b:
+    return True
+  else:
+    return False
+
+MujStringCompare("lukašenko", "bělorusko")
+MujStringCompare("COVID", "COVID")
+
+
+#15) Napište jednoduchý program pro sčítání, který postupně sčítá zadaná čísla a ukazuje mezivýsledek. Uživatel pomocí raw_input vždy zadá jedno číslo, program jej sečte s předchozím výsledkem (pozn.: velmi praktická věc):
+
+def counter():
+  storage = 0
+  x = True
+  while x == True:
+    numberRequest = int(input("zadejte číslo: "))
+    storage += numberRequest
+    message = "Mezisoučet: " + str(storage)
+    print(message)
+
+# counter()
+
+
+#16) Vytvořte jednoduchou hru: počítač si bude "myslet číslo" a my jej musíme pomocí raw_input uhádnout. Počítač nám napovídá "mé číslo je větší/menší" a "těsně", pokud jsme se minuli o 1. Počet pokusů je počítán a vypsán na konci.
+
+def gameGuess(difficulty):
+  from random import randrange
+  inputNumber = 0
+  computerNumber = int(randrange(difficulty))
+  while inputNumber != computerNumber:
+    inputNumber = int(input("Napiš číslo: "))
+    if (inputNumber + 1 == computerNumber) or (inputNumber - 1 == computerNumber):
+      print("You almost got me!")
+    elif inputNumber > computerNumber:
+      print("My number is lower")
+    elif inputNumber < computerNumber:
+      print("My number is higher")
+    else:
+      print("You won!")
+
+gameGuess(100)
