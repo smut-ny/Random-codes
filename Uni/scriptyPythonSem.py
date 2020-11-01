@@ -144,3 +144,22 @@ def pocetSlabik(words):
 
 #[ ] "Záludná" slova to většinou nezvládne viz popokatepetl
 pocetSlabik(["válka", "pálka", "vlk", "hltat", "prskavka", "hlasivky", "nejhlučnější", "auto", "ucho", "roucho", "louny", "koprovka", "roudná", "ropa", "ryzec", "zrzeček", "rasputin", "nejvzácnější", "popokatepetl", "ropuška", "rozdám", "koleno", "zaskočí"])
+
+#8) Funkce JeStringPalindrom, kteřá vrací True/False, pokud je zadaný string palindrom
+def JeStringPalindrom(word):
+  wordOrig = word.lower()
+  wordReversed = wordOrig[::-1]
+  if wordOrig == wordReversed:
+    return True
+  else:
+    return False
+
+print(JeStringPalindrom("pes"))
+print(JeStringPalindrom("radar"))
+print(JeStringPalindrom("oko"))
+print(JeStringPalindrom("robot"))
+print(JeStringPalindrom("pepe"))
+print(JeStringPalindrom("kajak"))
+print(JeStringPalindrom("Anna"))
+
+#9) Funkce JenSude, která pro daný seznam čísel vrátí jen ta sudá
