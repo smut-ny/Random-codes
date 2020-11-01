@@ -1,4 +1,3 @@
-#test
 # 1) Vytvořte vlastní funkci AbsolutniHodnota, která pro zadané číslo vrátí jeho absolutní hodnotu (bez použití funkce abs)
 def absolutniHodnota(number):
   if number >= 0:
