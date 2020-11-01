@@ -275,13 +275,25 @@ GetTokenInfo("Louno")
 
 #14) Vytvořte vlastní funkci MujStringCompare(a, b), která po jednotlivých znacích otestuje, zda jsou dva textové řetězce stejné. Pokud jsou stejné, funkce vrací True, jinak False
 def MujStringCompare(a, b):
-  if a == b:
-    return True
+  a_compare = []
+  b_compare = []
+  index_loop = 0
+  for i in a:
+    a_compare.append(i)
+  for i in b:
+    b_compare.append(i)
+  while a_compare[index_loop] == b_compare[index_loop]:
+    print(a_compare[index_loop] + " " + b_compare[index_loop])
+    index_loop += 1
+    if index_loop == len(a_compare) and len(b_compare):
+      return True
   else:
     return False
+    
 
 MujStringCompare("lukašenko", "bělorusko")
 MujStringCompare("COVID", "COVID")
+MujStringCompare("LOPATA", "LOPATKA")
 
 
 #15) Napište jednoduchý program pro sčítání, který postupně sčítá zadaná čísla a ukazuje mezivýsledek. Uživatel pomocí raw_input vždy zadá jedno číslo, program jej sečte s předchozím výsledkem (pozn.: velmi praktická věc):
