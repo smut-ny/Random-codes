@@ -232,7 +232,43 @@ def makeNGrams(stringList, N, pojitko):
 
 makeNGrams(["Pes", "je", "přítel", "člověka", "říká", "se", "často", "mezi", "lidmi", "ale", "už", "tolik", "ne", "mezi", "zvířaty"], 3, "-->")
 
-  
+
+#13) Funkce GetTokenInfo, která vrátí dictionare obsahující informace o zadaném tokenu: délka, odhadnutý počet slabik a zda je palindrom. 
 
 
+def GetTokenInfo(word):
+  def JeStringPalindrom(word):
+    wordOrig = word.lower()
+    wordReversed = wordOrig[::-1]
+    if wordOrig == wordReversed:
+      return True
+    else:
+      return False
   
+  def pocetSlabik(words):
+    find = ["a", "á", "e", "é", "i", "í", "o", "u", "ú", "ů", "l", "r", "y", "ě"]
+    stor = 0
+    for word in words:
+      stor = 0
+      for f in find:
+        loops = 0
+        while loops < len(word):
+          loops += 1
+          if f in word[(loops - 1)].lower():
+            stor += 1
+      while (len(word)/stor) < 2.5:
+        stor -= 1
+      while (len(word)/stor) >= 3.5:
+        stor += 1
+      return str(stor)
+
+  dictionary = {}
+  dictionary["Délka"] = len(word)
+  dictionary["Palindrom"] = JeStringPalindrom(word)
+  dictionary["Počet slabik"] = pocetSlabik([word])
+  return print(dictionary)
+
+GetTokenInfo("Pes")
+GetTokenInfo("Radar")
+GetTokenInfo("Žemle")
+GetTokenInfo("Louno")
