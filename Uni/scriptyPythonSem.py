@@ -206,6 +206,32 @@ def MakeBiGramLists (stringList):
 
 MakeBiGramLists(["Pes", "je", "přítel", "člověka", "říká", "se", "často", "mezi", "lidmi", "ale", "už", "tolik", "ne", "mezi", "zvířaty"])
 
+#12) Funkce MakeNGrams, která pro zadaný seznam tokenů, počet N  a lepidlo vytvoří jejich n-gramy
+def makeNGrams(stringList, N, pojitko):
+  nGrams = N
+  startingPoint = 0
+  dispersion = N-2
+  output = ""
+  loop = 0
+  for item in stringList:
+    listFin = stringList[startingPoint:nGrams]
+    nGrams += dispersion
+    startingPoint += dispersion
+    if len(listFin) == N:
+      for item in listFin:
+        loop += 1
+        if loop < N:
+          output += item + pojitko
+        else:
+          output += item
+      loop = 0
+      print(output)
+      output = ""
+
+
+
+makeNGrams(["Pes", "je", "přítel", "člověka", "říká", "se", "často", "mezi", "lidmi", "ale", "už", "tolik", "ne", "mezi", "zvířaty"], 3, "-->")
+
   
 
 
