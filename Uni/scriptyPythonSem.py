@@ -163,3 +163,19 @@ print(JeStringPalindrom("kajak"))
 print(JeStringPalindrom("Anna"))
 
 #9) Funkce JenSude, která pro daný seznam čísel vrátí jen ta sudá
+
+def JenSude(cislo): 
+  vypocet = cislo % 2
+  if vypocet == 1:
+    return False  
+  else:
+    return True
+
+print(JenSude(2))
+print(JenSude(11))
+print(JenSude(8))
+print(JenSude(222))
+print(JenSude(9086))
+
+
+#10) Funkce MakeBiGrams, která pro seznam tokenů vytvoří jejich bi-gramy spojené "-->"
