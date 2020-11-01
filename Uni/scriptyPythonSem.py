@@ -179,18 +179,20 @@ print(JenSude(9086))
 
 
 #10) Funkce MakeBiGrams, která pro seznam tokenů vytvoří jejich bi-gramy spojené "-->"
-def makeBiGrams(list):
-  pozice = 0
-  bigram2 = list[1]
-  for word in list:
-    pozice += 1
-    even = pozice % 2
-    if even == 1:
-      bigram1 = word
-      print(bigram1 + bigram2)
-    else:
-      bigram2 = word
-      print(bigram2 + bigram1)
+def makeBiGrams(stringList):
+  loop = 0
+  for item in stringList:
+    loop += 1
+    if loop > 1:
+      vysledek = storage + item
+      print(vysledek)
+    storage = item
 
 makeBiGrams(["Pes", "je", "přítel", "člověka", "říká", "se", "často", "mezi", "lidmi", "ale", "už", "tolik", "ne", "mezi", "zvířaty"])
+
+#11) Funkce MakeBiGramLists, která pro seznam tokenů vytvoří jejich bi-gramy uložené v seznamech
+  
+  
+
+
   
