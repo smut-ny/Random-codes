@@ -303,8 +303,10 @@ def counter():
 def gameGuess(difficulty):
   from random import randrange
   inputNumber = 0
+  loop = 0
   computerNumber = int(randrange(difficulty))
   while inputNumber != computerNumber:
+    loop += 1
     inputNumber = int(input("Napiš číslo: "))
     if (inputNumber + 1 == computerNumber) or (inputNumber - 1 == computerNumber):
       print("You almost got me!")
@@ -313,6 +315,6 @@ def gameGuess(difficulty):
     elif inputNumber < computerNumber:
       print("My number is higher")
     else:
-      print("You won!")
+      print("You won! " + "You guessed: " + str(loop) + " times")
 
-gameGuess(100)
+gameGuess(1000)
