@@ -184,14 +184,28 @@ def makeBiGrams(stringList):
   for item in stringList:
     loop += 1
     if loop > 1:
-      vysledek = storage + item
+      vysledek = storage + "-->" + item
       print(vysledek)
     storage = item
 
 makeBiGrams(["Pes", "je", "přítel", "člověka", "říká", "se", "často", "mezi", "lidmi", "ale", "už", "tolik", "ne", "mezi", "zvířaty"])
 
 #11) Funkce MakeBiGramLists, která pro seznam tokenů vytvoří jejich bi-gramy uložené v seznamech
-  
+def MakeBiGramLists (stringList):
+  loop = 0
+  seznamTemp = []
+  seznam = []
+  for item in stringList:
+    loop += 1
+    if loop > 1:
+      seznamTemp.extend([storage, item])
+      seznam.append(seznamTemp)
+      seznamTemp = []
+    storage = item
+  print(seznam)
+
+MakeBiGramLists(["Pes", "je", "přítel", "člověka", "říká", "se", "často", "mezi", "lidmi", "ale", "už", "tolik", "ne", "mezi", "zvířaty"])
+
   
 
 
