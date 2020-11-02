@@ -137,7 +137,7 @@ def pocetSlabik(words):
         if f in word[(loops - 1)].lower():
           stor += 1
     while (len(word)/stor) < 2.5:
-      stor -= 1
+      stor -= 1 
     while (len(word)/stor) >= 3.5:
       stor += 1
     print(word + " " + str(stor) + " " + str(len(word) / stor))
@@ -198,9 +198,9 @@ def MakeBiGramLists (stringList):
   for item in stringList:
     loop += 1
     if loop > 1:
+      seznamTemp = []
       seznamTemp.extend([storage, item])
       seznam.append(seznamTemp)
-      seznamTemp = []
     storage = item
   print(seznam)
 
@@ -210,7 +210,7 @@ MakeBiGramLists(["Pes", "je", "přítel", "člověka", "říká", "se", "často"
 def makeNGrams(stringList, N, pojitko):
   nGrams = N
   startingPoint = 0
-  dispersion = N-2
+  dispersion = N-(N-1)
   output = ""
   loop = 0
   for item in stringList:
@@ -230,7 +230,7 @@ def makeNGrams(stringList, N, pojitko):
 
 
 
-makeNGrams(["Pes", "je", "přítel", "člověka", "říká", "se", "často", "mezi", "lidmi", "ale", "už", "tolik", "ne", "mezi", "zvířaty"], 3, "-->")
+makeNGrams(["Pes", "je", "přítel", "člověka", "říká", "se", "často", "mezi", "lidmi", "ale", "už", "tolik", "ne", "mezi", "zvířaty"], 5, "-->")
 
 
 #13) Funkce GetTokenInfo, která vrátí dictionare obsahující informace o zadaném tokenu: délka, odhadnutý počet slabik a zda je palindrom. 
@@ -307,7 +307,7 @@ def counter():
     message = "Mezisoučet: " + str(storage)
     print(message)
 
-# counter()
+  # counter()
 
 
 #16) Vytvořte jednoduchou hru: počítač si bude "myslet číslo" a my jej musíme pomocí raw_input uhádnout. Počítač nám napovídá "mé číslo je větší/menší" a "těsně", pokud jsme se minuli o 1. Počet pokusů je počítán a vypsán na konci.
