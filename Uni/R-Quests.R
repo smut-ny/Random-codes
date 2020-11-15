@@ -290,3 +290,44 @@ hist(vysledek)
 #Ukažte na libovolné dvojici autorů reprezentované 1 knihou (seřiznutou na stejnou délku), zda to platí.
 #3. Je v češtině "y" používáno více než "i"? TokenizeText(plainText, "[yi]", regexlsMask=TRUE)
 
+#1.
+rawText1 <- GetFileContent("assets/jazyky/it.txt")
+rawText2 <- GetFileContent("assets/jazyky/gr1.txt")
+rawText3 <- GetFileContent("assets/jazyky/en1.txt")
+
+#2.
+viewegh1 <- GetFileContent("assets/knihy/vybijena.txt")
+viewegh2 <- GetFileContent("assets/knihy/vychova-divek.txt")
+urban1 <- GetFileContent("assets/knihy/Lord-Mord.txt")
+urban2 <- GetFileContent("assets/knihy/hastrman.txt")
+
+velikostSlovniku <- function(text, loop) {
+  result <- 0
+  textTokenize <- TokenizeText(text)
+  textsample <- sample(textTokenize, loop, replace=TRUE)
+  textnchar <- nchar(textsample)
+  for (i in textnchar) {
+    result <- result + i
+    
+    
+  }
+  return(result)
+}
+
+velikostSlovniku(viewegh1, 10000)
+velikostSlovniku(viewegh2, 10000)
+velikostSlovniku(urban1, 10000)
+velikostSlovniku(urban2, 10000)
+
+#3.
+
+textRaw <- "Seznam Zprávy zjistily, že organizaci ANO v Brně, kterou poškodila korupční kauza Stoka, má restartovat poslanec Karel Rais. Jeho pozici posiluje fakt, že patří k lidem blízkým šéfovi poslanců Jaroslavu Faltýnkovi.
+Článek
+Málokdy se ve strukturách ANO odehrává něco politicky dynamického. Většinou se děje především to, co si poručí předseda hnutí a premiér Andrej Babiš.
+Pozornost si tudíž zaslouží situace, když se ve voličsky důležitém regionu začíná de facto na zelené louce opět parcelovat vliv. A o to víc, je-li u takového procesu poslanec blízký druhému nejdůležitějšímu činovníkovi ANO Jaroslavu Faltýnkovi.
+"
+
+textYI <- TokenizeText(textRaw, "[yi]", regexIsMask=TRUE)
+result <- table(textYI)
+
+#2
