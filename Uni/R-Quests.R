@@ -5,7 +5,7 @@ source("https://raw.githubusercontent.com/oltkkol/vmod/master/simplest_text.R")
 
 
 ##QUEST 1
-#Naètìme do R knihu Švejk a zjistìme, jakou má prùmìrnou délku slov.
+#NaÄtÄ›me do R knihu Å vejk a zjistÄ›me, jakou mÃ¡ prÅ¯mÄ›rnou dÃ©lku slov.
 
 KlimaRaw <- GetFileContent("C:/Users/Tristo/Desktop/klima.txt")
 KlimaTok <- TokenizeText(KlimaRaw)
@@ -14,14 +14,14 @@ mean(KlimaNchar) #4.666762
 
 
 ##QUEST 2
-#Jaká je prùmìrná délka slov typù („slovníku“)?
+#JakÃ¡ je prÅ¯mÄ›rnÃ¡ dÃ©lka slov typÅ¯ (â€slovnÃ­kuâ€œ)?
 
 KlimaTypes <- unique(KlimaTok)
 KlimaTypesNchar <- nchar(KlimaTypes)
 mean(KlimaTypesNchar) #6.960354
 
 ##QUEST 3
-#Jak se mìní prùmìrná délka slov, kdy text roste?
+#Jak se mÄ›nÃ­ prÅ¯mÄ›rnÃ¡ dÃ©lka slov, kdyÅ¾ text roste?
 
 mean(KlimaNchar[1:10]) -> growth1
 mean(KlimaNchar[1:100]) -> growth2
@@ -62,7 +62,7 @@ source("https://raw.githubusercontent.com/oltkkol/vmod/master/simplest_text.R")
 
 
 ##QUEST 1
-#Naètìme do R knihu Švejk a zjistìme, jakou má prùmìrnou délku slov.
+#NaÄtÄ›me do R knihu Å vejk a zjistÄ›me, jakou mÃ¡ prÅ¯mÄ›rnou dÃ©lku slov.
 
 plainTExt <- GetFileContent("C:/Users/Tristo/Desktop/klima.txt")
 
@@ -153,7 +153,7 @@ lines(listx, grPlot, col="dark red", lty=3)
 
 
 
-#######Stochastické modelování
+#######StochastickÃ© modelovÃ¡nÃ­
 
 seznamNamerenychPrumeru <- c()
 
@@ -179,7 +179,7 @@ hist(seznamNamerenychPrumeru, breaks = 100)
 quantile(seznamNamerenychPrumeru, probs=c(0.025, 0.975))
 
 
-#QUEST: BOOTSTRAP (asi špatnì, malı rozptyld  )
+#QUEST: BOOTSTRAP (asi Å¡patnÄ›, malÃ½ rozptyld  )
 
 english <- GetFileContent("C:/Users/Tristo/Desktop/Matlach/jazyky/EN1.txt")
 gr <- GetFileContent("C:/Users/Tristo/Desktop/Matlach/jazyky/ge.txt")
@@ -284,9 +284,9 @@ quantile(vysledek, probs=c(0.025, 0.975))
 table(vysledek)
 hist(vysledek)
 
-#Srovnat autory na základì velikosti slovníku
-#1. vyuívá italština odlišnou délku slov ne nìmèina, angliètina.
-#2. Jeden vızkumník tvrdí, e velikost slovníku dokáe bez problému odlišit dva autory.
-#Ukate na libovolné dvojici autorù reprezentované 1 knihou (seøiznutou na stejnou délku), zda to platí.
-#3. Je v èeštinì "y" pouíváno více ne "i"? TokenizeText(plainText, "[yi]", regexlsMask=TRUE)
+#Srovnat autory na zÃ¡kladÄ› velikosti slovnÃ­ku
+#1. vyuÅ¾Ã­vÃ¡ italÅ¡tina odliÅ¡nou dÃ©lku slov neÅ¾ nÄ›mÄina, angliÄtina.
+#2. Jeden vÃ½zkumnÃ­k tvrdÃ­, Å¾e velikost slovnÃ­ku dokÃ¡Å¾e bez problÃ©mu odliÅ¡it dva autory.
+#UkaÅ¾te na libovolnÃ© dvojici autorÅ¯ reprezentovanÃ© 1 knihou (seÅ™iznutou na stejnou dÃ©lku), zda to platÃ­.
+#3. Je v ÄeÅ¡tinÄ› "y" pouÅ¾Ã­vÃ¡no vÃ­ce neÅ¾ "i"? TokenizeText(plainText, "[yi]", regexlsMask=TRUE)
 
