@@ -265,7 +265,7 @@ vysledek <- c()
 progress <- 0
 
 
-for (i in 1:100000){
+for (i in 1:10000){
   progress <- progress + 1
   kabinka <- sample(vagon, 5, replace = FALSE)
   
@@ -305,12 +305,8 @@ velikostSlovniku <- function(text, loop) {
   result <- 0
   textTokenize <- TokenizeText(text)
   textsample <- sample(textTokenize, loop, replace=TRUE)
-  textnchar <- nchar(textsample)
-  for (i in textnchar) {
-    result <- result + i
-    
-    
-  }
+  textnchar <- unique(textsample)
+  result <- length(textnchar)
   return(result)
 }
 
@@ -330,4 +326,13 @@ Pozornost si tudíž zaslouží situace, když se ve voličsky důležitém regi
 textYI <- TokenizeText(textRaw, "[yi]", regexIsMask=TRUE)
 result <- table(textYI)
 
-#2
+for (i in )
+
+#chybí bootstrap!
+
+
+#Quest jednotlivé grafémy italštiny BOXPLOT
+itatext <- GetFileContent("assets/jazyky/ita.txt")
+
+itatextLetters <- TokenizeText(itatext, "[abcdefgahijklmnopqrstuvwxyz]",regexIsMask=TRUE)
+itatextLetters <- table(itatextLetters)
