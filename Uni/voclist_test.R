@@ -44,40 +44,31 @@ for (i in 1:100){
     #Sampling tokenized text file
     textSampled <- sample(textTokenized, replace=TRUE)
     
-    #Dividing characters from sampled text into table
-    textCharacters <- TokenizeText(textSampled, "[abcdefgahijklmnopqrstuvwxyz]", regexIsMask=TRUE)
-    textCharacters <- table(textCharacters)
-    
-    #Appending characters into mapped list
-    if (textCharacters[["a"]] == TRUE) {
-       
-    }
-    vocList[["a"]] <- append(textCharacters[["a"]], vocList[["a"]])
-    vocList[["b"]] <- append(textCharacters[["b"]], vocList[["b"]])
-    vocList[["c"]] <- append(textCharacters[["c"]], vocList[["c"]])
-    vocList[["d"]] <- append(textCharacters[["d"]], vocList[["d"]])
-    vocList[["e"]] <- append(textCharacters[["e"]], vocList[["e"]])
-    vocList[["f"]] <- append(textCharacters[["f"]], vocList[["f"]])
-    vocList[["g"]] <- append(textCharacters[["g"]], vocList[["g"]])
-    vocList[["h"]] <- append(textCharacters[["h"]], vocList[["h"]])
-    vocList[["i"]] <- append(textCharacters[["i"]], vocList[["i"]])
-    vocList[["j"]] <- append(textCharacters[["j"]], vocList[["j"]])
-    vocList[["k"]] <- append(textCharacters[["k"]], vocList[["k"]])
-    vocList[["l"]] <- append(textCharacters[["l"]], vocList[["l"]])
-    vocList[["m"]] <- append(textCharacters[["m"]], vocList[["m"]])
-    vocList[["n"]] <- append(textCharacters[["n"]], vocList[["n"]])
-    vocList[["o"]] <- append(textCharacters[["o"]], vocList[["o"]])
-    vocList[["p"]] <- append(textCharacters[["p"]], vocList[["p"]])
-    vocList[["q"]] <- append(textCharacters[["q"]], vocList[["q"]])
-    vocList[["r"]] <- append(textCharacters[["r"]], vocList[["r"]])
-    vocList[["s"]] <- append(textCharacters[["s"]], vocList[["s"]])
-    vocList[["t"]] <- append(textCharacters[["t"]], vocList[["t"]])
-    vocList[["u"]] <- append(textCharacters[["u"]], vocList[["u"]])
-    vocList[["v"]] <- append(textCharacters[["v"]], vocList[["v"]])
-    vocList[["w"]] <- append(textCharacters[["w"]], vocList[["w"]])
-    vocList[["q"]] <- append(textCharacters[["q"]], vocList[["q"]])
-    vocList[["y"]] <- append(textCharacters[["y"]], vocList[["y"]])
-    vocList[["z"]] <- append(textCharacters[["z"]], vocList[["z"]])
+    #Appending characters
+    vocList[["a"]] <- append(vocList[["a"]], sum(str_count(textSampled, "a")))
+    vocList[["b"]] <- append(vocList[["b"]], sum(str_count(textSampled, "b")))
+    vocList[["c"]] <- append(vocList[["c"]], sum(str_count(textSampled, "c")))
+    vocList[["d"]] <- append(vocList[["d"]], sum(str_count(textSampled, "d")))
+    vocList[["e"]] <- append(vocList[["e"]], sum(str_count(textSampled, "e")))
+    vocList[["f"]] <- append(vocList[["f"]], sum(str_count(textSampled, "f")))
+    vocList[["g"]] <- append(vocList[["g"]], sum(str_count(textSampled, "g")))
+    vocList[["h"]] <- append(vocList[["h"]], sum(str_count(textSampled, "h")))
+    vocList[["i"]] <- append(vocList[["i"]], sum(str_count(textSampled, "i")))
+    vocList[["j"]] <- append(vocList[["j"]], sum(str_count(textSampled, "j")))
+    vocList[["k"]] <- append(vocList[["k"]], sum(str_count(textSampled, "k")))
+    vocList[["l"]] <- append(vocList[["l"]], sum(str_count(textSampled, "l")))
+    vocList[["m"]] <- append(vocList[["m"]], sum(str_count(textSampled, "m")))
+    vocList[["n"]] <- append(vocList[["n"]], sum(str_count(textSampled, "n")))
+    vocList[["o"]] <- append(vocList[["o"]], sum(str_count(textSampled, "o")))
+    vocList[["p"]] <- append(vocList[["p"]], sum(str_count(textSampled, "p")))
+    vocList[["q"]] <- append(vocList[["q"]], sum(str_count(textSampled, "q")))
+    vocList[["r"]] <- append(vocList[["r"]], sum(str_count(textSampled, "r")))
+    vocList[["s"]] <- append(vocList[["s"]], sum(str_count(textSampled, "s")))
+    vocList[["t"]] <- append(vocList[["t"]], sum(str_count(textSampled, "t")))
+    vocList[["u"]] <- append(vocList[["u"]], sum(str_count(textSampled, "u")))
+    vocList[["v"]] <- append(vocList[["v"]], sum(str_count(textSampled, "v")))
+    vocList[["w"]] <- append(vocList[["w"]], sum(str_count(textSampled, "w")))
+    vocList[["x"]] <- append(vocList[["x"]], sum(str_count(textSampled, "x")))
+    vocList[["y"]] <- append(vocList[["y"]], sum(str_count(textSampled, "y")))
+    vocList[["z"]] <- append(vocList[["z"]], sum(str_count(textSampled, "z")))
 }
-
-#Appenduje to prazdnej list.. to nejde protoze to hleda podle indexu
