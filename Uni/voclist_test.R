@@ -43,7 +43,7 @@ vocList[["z"]] <- c()
 for (i in 1:100){
     #Sampling tokenized text file
     textSampled <- sample(textTokenized, replace=TRUE)
-    
+
     #Appending characters
     vocList[["a"]] <- append(vocList[["a"]], sum(str_count(textSampled, "a")))
     vocList[["b"]] <- append(vocList[["b"]], sum(str_count(textSampled, "b")))
@@ -72,3 +72,5 @@ for (i in 1:100){
     vocList[["y"]] <- append(vocList[["y"]], sum(str_count(textSampled, "y")))
     vocList[["z"]] <- append(vocList[["z"]], sum(str_count(textSampled, "z")))
 }
+
+boxplot(vocList)
