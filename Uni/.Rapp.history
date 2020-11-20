@@ -1,0 +1,59 @@
+1+1
+x <= a + b
+x <- c(1, 2, 3, 4, 5, 6, 7, 8, 9)
+x
+sample(x)
+sample(x, 2)
+sample(x, replace = T)
+sample(x, 500, replace = T)
+sample(x, 5000, replace = T)
+sample(x, 500000, replace = T)
+x <- c(1,2, 3)
+x
+x <- c("hovno govno", "hovno")
+sample(x)
+sample(x, 200, replace = TRUE)
+v <- y
+v <- sample(x, 200, replace = T)
+v
+clear()
+cls
+v
+mean(v)
+length(v)
+char(v)
+v[3]
+v[2]
+v[1]
+install.packages("stringi")#
+install.packages("stringr")#
+source("https://raw.githubusercontent.com/oltkkol/vmod/master/simplest_text.R")#
+#
+itatext <- GetFileContent("assets/jazyky/ita.txt")#
+textTokenized <- TokenizeText(itatext)#
+textSampled <- sample(itatext, replace = T)#
+textLetters <- TokenizeText(textSampled, "[abcdefgahijklmnopqrstuvwxyz]", regexIsMask=TRUE)#
+textLetters
+itatext <- GetFileContent("assets/jazyky/it.txt")#
+textTokenized <- TokenizeText(itatext)#
+textSampled <- sample(itatext, replace = T)#
+textLetters <- TokenizeText(textSampled, "[abcdefgahijklmnopqrstuvwxyz]", regexIsMask=TRUE)#
+textLetters
+getwd()
+setwd(/Users/smutny/Documents/Coding/_github/Random-codes)
+setwd(""/Users/smutny/Documents/Coding/_github/Random-codes")
+setwd("/Users/smutny/Documents/Coding/_github/Random-codes")
+itatext <- GetFileContent("assets/jazyky/it.txt")#
+textTokenized <- TokenizeText(itatext)#
+textSampled <- sample(itatext, replace = T)#
+textLetters <- TokenizeText(textSampled, "[abcdefgahijklmnopqrstuvwxyz]", regexIsMask=TRUE)#
+textLetters
+getwd()
+setwd(./uni)
+setwd("./uni")
+itatext <- GetFileContent("assets/jazyky/it.txt")#
+textTokenized <- TokenizeText(itatext)#
+textSampled <- sample(itatext, replace = T)#
+textLetters <- TokenizeText(textSampled, "[abcdefgahijklmnopqrstuvwxyz]", regexIsMask=TRUE)#
+textLetters
+table(textLetters)

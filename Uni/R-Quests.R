@@ -332,7 +332,13 @@ for (i in )
 
 
 #Quest jednotlivé grafémy italštiny BOXPLOT
-itatext <- GetFileContent("assets/jazyky/ita.txt")
+## DEPENDENCE
+install.packages("stringi")
+install.packages("stringr")
+source("https://raw.githubusercontent.com/oltkkol/vmod/master/simplest_text.R")
 
-itatextLetters <- TokenizeText(itatext, "[abcdefgahijklmnopqrstuvwxyz]",regexIsMask=TRUE)
+itatext <- GetFileContent("assets/jazyky/it.txt")
+textTokenized <- TokenizeText(itatext)
+textSampled <- sample(itatext, replace = T)
+textLetters <- TokenizeText(textSampled, "[abcdefgahijklmnopqrstuvwxyz]", regexIsMask=TRUE)
 itatextLetters <- table(itatextLetters)
