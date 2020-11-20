@@ -40,6 +40,8 @@ vocList[["z"]] <- c()
 
 #Looping: sample whole text and append characters into a mapped list
 
+progress_bar <- 0
+
 for (i in 1:100){
     #Sampling tokenized text file
     textSampled <- sample(textTokenized, replace=TRUE)
@@ -71,6 +73,11 @@ for (i in 1:100){
     vocList[["x"]] <- append(vocList[["x"]], sum(str_count(textSampled, "x")))
     vocList[["y"]] <- append(vocList[["y"]], sum(str_count(textSampled, "y")))
     vocList[["z"]] <- append(vocList[["z"]], sum(str_count(textSampled, "z")))
+
+
+    progress_bar <- progress_bar + 1
+    cat(progress_bar)
+    cat("\n")
 }
 
 boxplot(vocList)
