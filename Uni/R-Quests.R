@@ -326,8 +326,6 @@ Pozornost si tudíž zaslouží situace, když se ve voličsky důležitém regi
 textYI <- TokenizeText(textRaw, "[yi]", regexIsMask=TRUE)
 result <- table(textYI)
 
-for (i in )
-
 #chybí bootstrap!
 
 
