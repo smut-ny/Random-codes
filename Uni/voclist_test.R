@@ -81,3 +81,7 @@ for (i in 1:100){
 }
 
 boxplot(vocList)
+
+
+
+#seznam[ seznam == "x"]
