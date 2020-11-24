@@ -3,6 +3,12 @@ install.packages("stringi")
 install.packages("stringr")
 source("https://raw.githubusercontent.com/oltkkol/vmod/master/simplest_text.R")
 
+
+
+
+
+
+#PROGRAM 1
 #Loading and cleaning text file
 rawText <- GetFileContent("assets/jazyky/it.txt")
 textTokenized <- TokenizeText(rawText)
@@ -83,5 +89,39 @@ for (i in 1:100){
 boxplot(vocList)
 
 
+#PROGRAM 2
+#Loading and cleaning text file
+rawText <- GetFileContent("assets/jazyky/it.txt")
+textABC <- TokenizeText(textSampled, regexPattern = "[abcdefghijklmnopqrstuvwxyz]", regexIsMask = T)
+progress_bar <- 0
 
-#seznam[ seznam == "x"]
+for (i in 1:10000){
+    textSampled <- sample(textABC, replace=TRUE)
+    textSampledTable <- table(textSampled)
+    textSampledList <- split(textSampledTable, seq(rownames(textSampledTable)))
+    
+    if (i == 1){
+        finalList <- textSampledList
+    }
+    else{
+        finalList <- Map(c, finalList, textSampledList)
+    }
+    
+    progress_bar <- progress_bar + 1
+    cat(progress_bar)
+    cat("\n")
+}
+
+boxplot(finalList)
+
+   
+
+#MESS
+TextTokenizedAlt <- TokenizeText(rawText, regexPattern = "[abcdefghijklmnopqrstuvwxyz]", regexIsMask = T)
+TextToSampled <- sample(TextTokenizedAlt, replace = T)
+TextTokenizedTable <- table(TextToSampled)
+TextTokenizedTable
+Map(c, list1, list2)
+abc <- c("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
+
+
