@@ -3,11 +3,6 @@ install.packages("stringi")
 install.packages("stringr")
 source("https://raw.githubusercontent.com/oltkkol/vmod/master/simplest_text.R")
 
-
-
-
-
-
 #PROGRAM 1
 #Loading and cleaning text file
 rawText <- GetFileContent("assets/jazyky/it.txt")
@@ -92,7 +87,7 @@ boxplot(vocList)
 #PROGRAM 2
 #Loading and cleaning text file
 rawText <- GetFileContent("assets/jazyky/it.txt")
-textABC <- TokenizeText(textSampled, regexPattern = "[abcdefghijklmnopqrstuvwxyz]", regexIsMask = T)
+textABC <- TokenizeText(textSampled, regexPattern = "[a-z]", regexIsMask = T)
 progress_bar <- 0
 
 for (i in 1:10000){
@@ -113,6 +108,9 @@ for (i in 1:10000){
 }
 
 boxplot(finalList)
+
+
+
 
    
 

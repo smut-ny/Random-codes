@@ -1,0 +1,191 @@
+# 1. Dependencies
+
+```{r}
+install.packages("stringi")
+install.packages("stringr")
+install.packages("udpipe")
+install.packages("tidyverse")
+source("https://raw.githubusercontent.com/oltkkol/vmod/master/simplest_text.R")
+```
+
+# 2. Import textů (getfilecontent)
+```{r}
+rawLangIT <- GetFileContent("assets/jazyky/IT.txt")
+tokLangIT <- TokenizeText(rawLangIT)
+tokLangIT_chars <- TokenizeText(rawLangIT, "[a-z]", regexIsMask = T)
+```
+
+# 3. Questy
+## 1. Quest 1: 
+jak se mění průměrná délka slov, když text roste (kdybychom chtěli loop skrz celý text, musíme místo limitu dát length(tokText))
+
+```{r}
+growing <- function (rawText, limit){
+  result <- c()
+  tokText <- TokenizeText(rawText)
+  for (i in 1:limit){
+    tempMean <- mean(nchar(tokText[1:i]))
+    result <- append(result, tempMean)
+    
+    #progress bar
+    cat("\n")
+    cat(i)
+  }
+  return(result)
+}
+
+vysledek <- growing(rawLangIT, 2000)
+hist(vysledek)
+```
+
+##2. Quest (lingvistický quest): 
+udělejte odhad průměrné délky slov pro autora z jediné jeho knihy.
+
+```{r}
+
+#Input of function: 1. raw txt file, 2. number of shuffles (int)
+
+
+meanChars <- function(rawText, shuffleNumber) {
+  result <- c()
+  tokText <- TokenizeText(rawText)
+  for (i in 1:shuffleNumber){
+    tempMean <- mean(nchar(sample(tokText, replace = T)))
+    result <- append(result, tempMean)
+    
+    #progress bar
+    cat("\n")
+    cat(i)
+  }
+  
+  resultHist <- hist(result, breaks = 100)
+  return(result)
+  return(resultHist)
+}
+
+vysledek <- meanChars(rawLangIT, 200)
+mean(vysledek)
+quantile(vysledek,  probs=c(0.025, 0.975) )
+
+```
+
+
+##3. Quest Vagon
+
+```{r}
+#### exec. time
+start.time <- Sys.time()
+
+
+## Ve vagonu je 92 lidí (83p + 9l), v kabince 5 lidí.
+
+probabilityTrain <- function(shuffleNumber){
+  
+  vagon <- c(rep("pravak", 83), rep("levak", 9))
+  vysledek <- c()
+  
+  for (i in 1:shuffleNumber){
+    kabinka <- sample(vagon, 5)
+    vysledek <- append(vysledek, sum(kabinka == "levak"))
+  }
+  return(vysledek)
+}
+vysledek <- probabilityTrain(200000)
+
+table(vysledek)
+quantile(vysledek, probs=c(0.025, 0.975))
+hist(vysledek)
+
+
+#### exec. time
+end.time <- Sys.time()
+time.taken <- end.time - start.time
+time.taken
+####
+
+```
+
+##Quest 4: využívání jednotlivých grafému pro italštinu (boxplot)
+
+```{r}
+library(tidyverse)
+
+graphemes <- function(rawText) {
+  
+  characters_storage <- data.frame()
+  tokText <- TokenizeText(rawText, "[a-z]", regexIsMask = T)
+
+  for (i in 1:10){
+  characters <- tokText %>%
+    sample(replace = T) %>%
+    table() %>%
+    data.frame()
+  
+    if (i > 1){
+      characters_storage <- characters_storage %>% 
+        left_join(characters, by=".")
+    } else { 
+      characters_storage <- cbind(characters)
+    }
+
+  }
+
+return(characters_storage)
+}
+
+resultDataFrame <- graphemes(rawLangIT)
+resultList <- resultDataFrame %>%
+  split(seq(nrow(resultDataFrame))) %>%
+  map(c)
+resultList
+
+```
+
+
+##Quest final
+Vytvořte skript, který …
+	pro zadaný adresář načte všechny texty a získá:
+		* počet tokenů
+		* počet typů
+		* průměrnou délku slov
+		* průměrnou délku vět (udpipe!)
+		* celkový počet sloves (udpipe!)
+		* celkový počet podstatných jmen ve 2. pádu (udpipe!)
+		* vypočítá entropii slov:
+			table( tokeny) / length(unique( tokeny )) -> p
+
+			- sum( p * log(p) ) -> vyslednaEntropie
+	
+
+Výsledky pro jednotlivé texty uložit jako řádky v tabulce s popsanými sloupci.
+
+```{r}
+library(tidyverse)
+library("stringi")
+library("stringr")
+library("udpipe")
+library("tidyverse")
+source("https://raw.githubusercontent.com/oltkkol/vmod/master/simplest_text.R")
+```
+
+
+
+```{r}
+
+
+
+
+qfin_loadDirectory <- GetFilesContentsFromFolder("assets/finalQuestDir")
+
+
+qfin_tokenized <- qfin_loadDirectory[[1]] %>%  
+  TokenizeTexts()
+
+
+
+
+
+
+
+```
+
