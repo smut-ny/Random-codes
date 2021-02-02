@@ -1,76 +1,73 @@
+#Dependencies
 library(tidyverse)
 library("stringi")
 library("stringr")
 library("udpipe")
 library("tidyverse")
 source("https://raw.githubusercontent.com/oltkkol/vmod/master/simplest_text.R")
-
-
-
 qfin_loadDirectory <- GetFilesContentsFromFolder("assets/finalQuestDir")
 infoStazeni <- udpipe_download_model(language="czech")
 modelUdpipe <- udpipe_load_model(file = infoStazeni$file_model)
 
 
-
-
 getTextInfo <- function(list){
+  #Deklarace vars
   loopNumber <- 0
   textInfoTable <- data.frame()
 
-  #Loop přes všechny texty a iniciace funkcí
+
+  #Loop skrze všechny texty
   for (text in list) {
     loopNumber <- loopNumber + 1
     tokenizedText <- TokenizeText(text)
     textName <- names(list[loopNumber])
 
-    cat("\n \n")
-    cat("Working on: ")
+    cat("\n \n Working on: ")
     cat(textName)
 
-    #FUNKCE
-    #1. počet typů a tokenů
-    token <- length(tokenizedText)
-    type <- length(unique(tokenizedText))
 
-    #2. průměrná délka slov
-    meanWord <- mean(nchar(tokenizedText))
+    #JEDNOTLIVÉ FUNKCE
+    #1. Počet typů a tokenů
+    getToken <- length(tokenizedText)
+    getType <- length(unique(tokenizedText))
+
+    #2. Průměrná délka slov
+    getMeanWord <- mean(nchar(tokenizedText))
     
-    #3. entropie slov
-    p <- table(token) / type
-    getEntropy <- sum(p * log(p))
+    #3. Entropie slov
+    p <- table(getToken) / getType
+
+    getEntropy <- - sum(p * log(p))
 	
+    #4. Udpipe questy (model, anotace)
+    annotate <- udpipe_annotate(modelUdpipe, x = text)
+    tableAnnotated <- as.data.frame(annotate)
 
-    #4. udpipe quests
-      anotace <- udpipe_annotate(modelUdpipe, x = text)
-      tabulkaAnotace <- as.data.frame(anotace)
+    #4.1. Průměrná délka vět
+    sentenceTable <- table(tableAnnotated$sentence_id)
+    sentenceListNum <- c()
+    for (sentence in sentenceTable){sentenceListNum <- append(sentence, sentenceListNum)}
 
-    #4.1. Mean sentence
-      sentenceTable <- table(tabulkaAnotace$sentence_id)
-      sentenceListNum <- c()
-      for (i in sentenceTable){
-        sentenceListNum <- append(i, sentenceListNum)
-      }
-      meanSentence <- mean(sentenceListNum)
+    getMeanSentence <- mean(sentenceListNum)
     
-    #4.2.Number of Verbs 
-      POS <- tabulkaAnotace$upos
-      getVerbs <- length(which(POS == "VERB"))
-      getNouns <- grepl("N...2.*", tabulkaAnotace$xpos)%>%
-        which()%>%
-        length()
+    #4.2. Celkový počet sloves a podstatných jmen ve 2. pádu 
+    POS <- tableAnnotated$upos
 
-      textInfoTable <- rbind(textInfoTable, c(token, type, meanSentence, getEntropy, getVerbs, getNouns))
+    getVerbs <- length(which(POS == "VERB"))
+    getNouns <- grepl("N...2.*", tableAnnotated$xpos)%>%
+      which()%>%
+      length()
+
+    #Vložení do tabulky
+    textInfoTable <- rbind(textInfoTable, c(getToken, getType, getMeanWord, getMeanSentence, getEntropy, getVerbs, getNouns))
    }
-  colnames(textInfoTable) <- c("token", "types", "mean sentence", "entropy", "verbs", "nouns")
-  textInfoTable
+
+  #Pojmenování řádků a seznamů tabulky
+  colnames(textInfoTable) <- c("Počet tokenů", "Počet typů", "Průměrná délka slov", "Průměrná délka vět", "Entropie", "Verbs", "Nouns (2. pád)")
+  rownames(textInfoTable) <- names(list)
+  
+  return(textInfoTable)
 }
 
 
 getTextInfo(qfin_loadDirectory)
-
-
-
-tableTest <- data.frame()
-##Knihy v řádcích
-tableTest <- rbind(tableTest, "Jmeno")
