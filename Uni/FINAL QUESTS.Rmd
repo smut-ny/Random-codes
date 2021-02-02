@@ -33,7 +33,7 @@ growing <- function (rawText, limit){
   return(result)
 }
 
-vysledek <- growing(rawLangIT, 2000)
+vysledek <- growing(rawLangIT, 1000)
 hist(vysledek)
 ```
 
