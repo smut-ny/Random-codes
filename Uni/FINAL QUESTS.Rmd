@@ -27,8 +27,7 @@ growing <- function (rawText, limit){
     result <- append(result, tempMean)
     
     #progress bar
-    cat("\n")
-    cat(i)
+    cat(i, "\n")
   }
   return(result)
 }
@@ -53,16 +52,16 @@ meanChars <- function(rawText, shuffleNumber) {
     result <- append(result, tempMean)
     
     #progress bar
-    cat("\n")
-    cat(i)
+    cat(i, "\n")
   }
   
-  resultHist <- hist(result, breaks = 100)
   return(result)
-  return(resultHist)
 }
 
 vysledek <- meanChars(rawLangIT, 200)
+vysledekHist <- hist(vysledek, breaks = 100)
+vysledek
+vysledekHist
 mean(vysledek)
 quantile(vysledek,  probs=c(0.025, 0.975) )
 
@@ -140,6 +139,34 @@ resultList
 
 ```
 
+##Quest 4 // rework
+
+```{r}
+
+
+graphemesBoxplot <- function (rawText){
+    tokText <- TokenizeText(rawText, "[a-z]", regexIsMask = T)
+    storage <- c()
+    
+    for (i in 1:10) {
+    bootstrap <- sample(tokText, replace = T)
+    storage <- append(storage, bootstrap)
+    cat("\n", i)
+      
+    }
+    storage <- table(storage)%>%
+      rbind()%>%
+      data.frame()%>%
+      boxplot()
+    
+    return(storage)
+}
+
+resultGraphemes <- graphemesBoxplot(rawLangIT)
+
+```
+
+
 
 ##Quest final
 Vytvořte skript, který …
@@ -174,17 +201,17 @@ modelUdpipe <- udpipe_load_model(file = infoStazeni$file_model)
 
 ```{r}
 
-getTextInfo <- function(list){
+getTextInfo <- function(listData){
   #Deklarace vars
   loopNumber <- 0
   textInfoTable <- data.frame()
 
 
   #Loop skrze všechny texty
-  for (text in list) {
+  for (text in listData) {
     loopNumber <- loopNumber + 1
     tokenizedText <- TokenizeText(text)
-    textName <- names(list[loopNumber])
+    textName <- names(listData[loopNumber])
 
     cat("\n \n Working on: ")
     cat(textName)
@@ -210,7 +237,7 @@ getTextInfo <- function(list){
     #4.1. Průměrná délka vět
     sentenceTable <- table(tableAnnotated$sentence_id)
     sentenceListNum <- c()
-    for (sentence in sentenceTable){sentenceListNum <- append(sentence, sentenceListNum)}
+    for (sentence in sentenceTable)sentenceListNum <- append(sentence, sentenceListNum)
 
     getMeanSentence <- mean(sentenceListNum)
     
