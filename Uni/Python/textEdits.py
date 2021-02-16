@@ -9,7 +9,7 @@ def openFile(fileNameString):
 
 # Returns number of sylabes
 
-def sylabesNum(word):
+def sylabesNumCZ(word):
     vocKonsonants = ""
     sylabes = len(word)
     vocalList = ["a", "á", "e", "é", "i", "í", "o", "u", "ú", "ů", "l", "r", "y", "ě"]
@@ -43,9 +43,4 @@ def sylabesNum(word):
         
     #Sylabes and Konsonants operations
     return sylabes
-
-
-
-
-print(sylabesNum("rozválenina"))
 
