@@ -140,7 +140,7 @@ def pocetSlabik(words):
       stor -= 1 
     while (len(word)/stor) >= 3.5:
       stor += 1
-    print(word + " " + str(stor) + " " + str(len(word) / stor))
+    return word + " " + str(stor) + " " + str(len(word) / stor)
 
 #[ ] "Záludná" slova to většinou nezvládne viz popokatepetl
 pocetSlabik(["válka", "pálka", "vlk", "hltat", "prskavka", "hlasivky", "nejhlučnější", "auto", "ucho", "roucho", "louny", "koprovka", "roudná", "ropa", "ryzec", "zrzeček", "rasputin", "nejvzácnější", "popokatepetl", "ropuška", "rozdám", "koleno", "zaskočí"])
@@ -330,7 +330,3 @@ def gameGuess(difficulty):
       print("You won! " + "You guessed: " + str(loop) + " times")
 
 gameGuess(1000)
-
-
-
-#
