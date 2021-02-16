@@ -144,25 +144,21 @@ resultList
 ```{r}
 
 
-graphemesBoxplot <- function (rawText){
-    tokText <- TokenizeText(rawText, "[a-z]", regexIsMask = T)
-    storage <- c()
-    
-    for (i in 1:10) {
-    bootstrap <- sample(tokText, replace = T)
-    storage <- append(storage, bootstrap)
-    cat("\n", i)
-      
-    }
-    storage <- table(storage)%>%
-      rbind()%>%
-      data.frame()%>%
-      boxplot()
-    
-    return(storage)
-}
-
-resultGraphemes <- graphemesBoxplot(rawLangIT)
+  graphemesBoxplot <- function (rawText){
+      tokText <- TokenizeText(rawText, "[a-z]", regexIsMask = T)
+      storage <- c()
+  
+      for (i in 1:3000) {
+      bootstrap <- sample(tokText[1:1000], replace = T)
+      freqTable <- table(bootstrap)
+      storage <- rbind(storage, freqTable)
+      }
+      result <- boxplot(storage)
+      return(result)
+  }
+  
+  resultGraphemes <- graphemesBoxplot(rawLangIT)
+  resultGraphemes
 
 ```
 
