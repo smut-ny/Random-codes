@@ -7,8 +7,6 @@ def openFile(fileNameString):
         rawText = f.readlines()
     return rawText
 
-# Returns number of sylabes
-
 def sylabesNumCZ(word):
     vocKonsonants = ""
     sylabes = len(word)
@@ -22,6 +20,7 @@ def sylabesNumCZ(word):
         else:
             vocKonsonants += "K"
     
+    #Sylabes and Konsonants operations
     K = len(re.findall('K', vocKonsonants))
     VV = len(re.findall('VV', vocKonsonants))
     VWV = len(re.findall('VWV', vocKonsonants))
@@ -41,6 +40,5 @@ def sylabesNumCZ(word):
     if WV and VW and VWV:
         sylabes += VWV * 2
         
-    #Sylabes and Konsonants operations
     return sylabes
 
