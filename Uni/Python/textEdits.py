@@ -42,3 +42,9 @@ def sylabesNumCZ(word):
         
     return sylabes
 
+def getTokenizedList(rawText):
+    wordList = []
+    for line in rawText:
+        word = re.split('\W+', line.lower())
+        wordList += word
+    return wordList
