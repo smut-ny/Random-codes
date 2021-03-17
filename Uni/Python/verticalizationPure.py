@@ -41,13 +41,52 @@ def CalcTTRFromDict(freqTable):
     freqTable = freqTable.items()
     tokens = 0
     types = len(freqTable)
+
     for key, value in freqTable:
         tokens += value
     
     TTR = types / tokens
     return TTR
 
-print(getTokensFreqs(rawText))
+# print(getTokensFreqs(rawText))
 
 
-# 3) Funkce MakeBow, která pro xxzadaný seznam textů zadaných pomocí dictionare obsahující jméno a text (viz příklad) vytvoří model Bag-Of-Words (popis viz níže):
+# 3) Funkce MakeBow, která pro zadaný seznam textů zadaných pomocí dictionare obsahující jméno a text (viz příklad) vytvoří model Bag-Of-Words (popis viz níže):
+
+texts = [{"name": "text1", "data": "Já jsem vojta Ahoj ?? ahoj Vojta"},{"name": "text2", "data": "Já nejsem Vojta, ale mohl bych být"}]
+
+def makeBow(texts):
+    globalVocabulary = {}
+    tokList = []
+
+    #Convert dictionare into global vocabulary and tokenize words
+    for data in texts:
+        tokenizeText = getTokenizedList([data["data"]])
+        tokList += tokenizeText
+        #Update original dictionare data string with tokenized list
+        data.update({"data": tokenizeText})
+
+    #Only unique words
+    globalVocabulary = set(tokList)
+
+    #Match texts
+    for data in texts:
+        matchedWords = []
+
+        for word in globalVocabulary:
+            if word in data["data"]:
+                matchedWords += [1]
+            else:
+                matchedWords += [0]
+                
+        data["data"] = matchedWords
+
+    return texts
+
+print(makeBow(texts))
+
+# Co musím udělat
+# [ ] Tokenizovat 
+# [ ] Globální slovník
+# [ ] Validaci
+
