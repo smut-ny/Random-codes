@@ -1,6 +1,7 @@
 from textEdits import openFile
 from textEdits import sylabesNumCZ
 from textEdits import getTokenizedList
+import numpy as np
 import re
 
 rawText = openFile("/Users/smutny/Documents/Coding/_github/Random-codes/Uni/Python/lyric.txt")
@@ -83,10 +84,27 @@ def makeBow(texts):
 
     return texts
 
-print(makeBow(texts))
 
-# Co musím udělat
-# [ ] Tokenizovat 
-# [ ] Globální slovník
-# [ ] Validaci
 
+# 4) Vytvořte funkci CosineDistance(vektorA, vektorB), která vypočítá kosinovou vzdálenost vektorů A a B
+
+
+def cosineDistance (a, b):
+    citatel = sum(np.multiply(a, b))
+    jmenovatel = np.multiply(np.sqrt(sum(np.power(a, 2))), np.sqrt(sum(np.power(b, 2))))
+    return(citatel / jmenovatel)
+
+a = [0, 2, 1, 0]
+b = [0, 0, 1, 1]
+print(cosineDistance(a,b))
+
+# Funguje to špatně s tímto vektorem, když mám v returnu to 1 - : a = [0, 2, 1, 0] b = [0, 0, 1, 1]
+# Kontrola
+# from scipy import spatial
+# print(1 - spatial.distance.cosine(a, b))
+
+
+# Alternativa pro np.multiply by mohl být for skrze zip() funkci
+
+
+# 5) Vytvořte funkci FolderToBoW, která načte všechny TXT soubory ze zadaného adresáře a vytvoří z nich bag-of-words model.
