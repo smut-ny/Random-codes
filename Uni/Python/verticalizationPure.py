@@ -96,7 +96,7 @@ def cosineDistance (a, b):
 
 a = [0, 2, 1, 0]
 b = [0, 0, 1, 1]
-print(cosineDistance(a,b))
+# print(cosineDistance(a,b))
 
 # Funguje to špatně s tímto vektorem, když mám v returnu to 1 - : a = [0, 2, 1, 0] b = [0, 0, 1, 1]
 # Kontrola
@@ -108,3 +108,21 @@ print(cosineDistance(a,b))
 
 
 # 5) Vytvořte funkci FolderToBoW, která načte všechny TXT soubory ze zadaného adresáře a vytvoří z nich bag-of-words model.
+
+def folderToBoW(path):
+    import glob 
+    texts = glob.glob(path + "*.txt")
+    texts_dict = {}
+    texts_list = []
+
+    for text in texts:
+        texts_dict['name'] = text
+        texts_dict['data'] = ''.join(openFile(text))
+        texts_list.append(texts_dict.copy())
+    
+    return makeBow(texts_list)
+
+print(folderToBoW("Uni/Python/texts/"))
+
+
+    
