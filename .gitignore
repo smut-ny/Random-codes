@@ -24,3 +24,4 @@ node_modules
 .RData
 .Rapp.history
 .vscode/.ropeproject/config.py
+Uni/Python/.vscode/settings.json
