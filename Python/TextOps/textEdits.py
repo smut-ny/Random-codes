@@ -3,7 +3,7 @@ import re
 
 def openFile(path):
     with open(path) as f:
-        rawText = f.readlines()
+        rawText = f.read()
     return rawText
 
 
@@ -21,7 +21,7 @@ def getSyllabesCZ(word):
         else:
             vocals_konsonants += "K"
     
-    #Syllabes/konsonants placeholder operation
+    #Syllabes/konsonants placeholder operations
     K = len(re.findall('K', vocals_konsonants))
     VV = len(re.findall('VV', vocals_konsonants))
     VWV = len(re.findall('VWV', vocals_konsonants))
@@ -39,15 +39,12 @@ def getSyllabesCZ(word):
     if WV:
         syllabes -= WV
     if WV and VW and VWV:
-        syllabes += VWV * 2
+        syllabes += VWV 
         
     return syllabes
 
 
 def getTokenizedList(plain_text):
-    wordList = []
-
-    for line in plain_text:
-        word = re.split('\W+', line.lower())
-        wordList += word
-    return wordList
+    word = re.split('\W+', plain_text.lower())
+    word = list(filter(None, word))
+    return word

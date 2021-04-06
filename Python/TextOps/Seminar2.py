@@ -1,61 +1,46 @@
 from textEdits import openFile
-from textEdits import sylabesNumCZ
+from textEdits import getSyllabesCZ
 from textEdits import getTokenizedList
 import numpy as np
 import re
 
-rawText = openFile("/Users/smutny/Documents/Coding/_github/Random-codes/Uni/Python/texts/lyric.txt")
-
-
 
 # 1) Napište program, který zadaný textový soubor tokenizuje a uloží jej do vertikály společně s informací o délce tokenu a odhadovaném počtu slabik (využijte již hotové funkce pro získávání informací o tokenu)
-
-
-def getVerticalCZ(rawText):
+def getVerticalCZ(plain_text):
     vertical = ''
-    tokenizeText = getTokenizedList(rawText)
+    tokenizeText = getTokenizedList(plain_text)
     for word in tokenizeText:
         if word:
-            sylabes = sylabesNumCZ(word)
+            sylabes = getSyllabesCZ(word)
             vertical += word + " | tok: " + str(len(word)) + " syl: " + str(sylabes) + "\n"
     return vertical
 
 
-
 # 2) Vytvořte funkci GetTokensFreqs(soubor), která pro zadaný textový soubor získá získá slovník vč. četností jednotlivých slov formou dictionaru, kde klíčem bude slovo a hodnotou jeho frekvence.
+def getTokensFreqs(plain_text):
+    tokens_list = getTokenizedList(plain_text)
+    frequency_table = {}
 
+    for word in tokens_list:
+        word_occurrence = tokens_list.count(word)
+        frequency_table[word] = word_occurrence
  
-
-def getTokensFreqs(rawText):
-    tokenizedList = getTokenizedList(rawText)
-    # tokenizedList.sort() Kdybych to chtěl abecedně
-    freqTable = {}
-
-    for word in tokenizedList:
-        frequency = tokenizedList.count(word)
-        freqTable[word] = frequency
- 
-    return freqTable
-
-# print(getTokensFreqs(rawText))
+    return frequency_table
 
 # následně vytvořte funkci, která z tohoto výsledného slovníku vypočítá TTR (type-to-token ratio) neboli velikost slovníku / délka textu ve slovech, a to pomocí funkce CalcTTRFromDict(slovník)
-def CalcTTRFromDict(freqTable):
-    freqTable = freqTable.items()
+def CalcTTRFromDict(frequency_table):
     tokens = 0
-    types = len(freqTable)
+    types = len(frequency_table)
+    frequency_table = frequency_table.items()
 
-    for key, value in freqTable:
-        tokens += value
+    for word, frequency in frequency_table:
+        tokens += frequency
     
-    TTR = types / tokens
-    return TTR
-
-# print(getTokensFreqs(rawText))
-
+    type_to_token_ratio = types / tokens
+    return type_to_token_ratio
 
 # 3) Funkce MakeBow, která pro zadaný seznam textů zadaných pomocí dictionare obsahující jméno a text (viz příklad) vytvoří model Bag-Of-Words (popis viz níže):
-# TODO - Zkontrolovat výsledek, nevím jestli funguje
+# TODO - Zkontrolovat výsledek, nevím jestli funguje TADY JSEM SKONČIL S REFACTOREM
 texts = [{"name": "text1", "data": "Jsem jeseter Pepa"},{"name": "text2", "data": "Jsem jeseter Franta"},{"name": "text3", "data": "Nejsem jeseter Franta"}]
 
 def makeBow(texts):
@@ -87,7 +72,6 @@ def makeBow(texts):
     return texts
 
 
-print(makeBow(texts))
 
 
 # 4) Vytvořte funkci CosineDistance(vektorA, vektorB), která vypočítá kosinovou vzdálenost vektorů A a B
@@ -127,7 +111,7 @@ def folderToBoW(path):
     
     return makeBow(texts_list)
 
-print(folderToBoW("Uni/Python/texts/"))
+
 
 
     
