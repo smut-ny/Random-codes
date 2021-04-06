@@ -1,6 +1,7 @@
 from textEdits import openFile
 from textEdits import getSyllabesCZ
 from textEdits import getTokenizedList
+import math
 import numpy as np
 import re
 
@@ -27,6 +28,7 @@ def getTokensFreqs(plain_text):
  
     return frequency_table
 
+
 # následně vytvořte funkci, která z tohoto výsledného slovníku vypočítá TTR (type-to-token ratio) neboli velikost slovníku / délka textu ve slovech, a to pomocí funkce CalcTTRFromDict(slovník)
 def CalcTTRFromDict(frequency_table):
     tokens = 0
@@ -39,61 +41,86 @@ def CalcTTRFromDict(frequency_table):
     type_to_token_ratio = types / tokens
     return type_to_token_ratio
 
+
 # 3) Funkce MakeBow, která pro zadaný seznam textů zadaných pomocí dictionare obsahující jméno a text (viz příklad) vytvoří model Bag-Of-Words (popis viz níže):
-# TODO - Zkontrolovat výsledek, nevím jestli funguje TADY JSEM SKONČIL S REFACTOREM
-texts = [{"name": "text1", "data": "Jsem jeseter Pepa"},{"name": "text2", "data": "Jsem jeseter Franta"},{"name": "text3", "data": "Nejsem jeseter Franta"}]
+def makeBow(texts_dict):
+    global_vocabulary = []
 
-def makeBow(texts):
-    globalVocabulary = {}
-    tokList = []
+    for text in texts_dict:
+        tokenizeText = getTokenizedList(text["data"])
+        text.update({"data": tokenizeText})
+        global_vocabulary += tokenizeText
 
-    #Convert dictionare into global vocabulary and tokenize words
-    for data in texts:
-        tokenizeText = getTokenizedList([data["data"]])
-        tokList += tokenizeText
-        #Update original dictionare data string with tokenized list
-        data.update({"data": tokenizeText})
+    #Unique words in global vocabulary
+    global_vocabulary_unique = {}
+    global_vocabulary_unique = set(global_vocabulary)
 
-    #Only unique words
-    globalVocabulary = set(tokList)
+    #Match words with global vocabulary
+    for text in texts_dict:
+        word_match = []
 
-    #Match texts
-    for data in texts:
-        matchedWords = []
-
-        for word in globalVocabulary:
-            if word in data["data"]:
-                matchedWords += [1]
+        for word in global_vocabulary_unique:
+            if word in text["data"]:
+                word_match += [1]
             else:
-                matchedWords += [0]
+                word_match += [0]
                 
-        data["data"] = matchedWords
+        text["data"] = word_match
 
-    return texts
+    return texts_dict
 
-
+# texts = [{"name": "text1", "data": "Jsem jeseter Pepa"},{"name": "text2", "data": "Jsem jeseter Franta"},{"name": "text3", "data": "Nejsem jeseter Franta"}]
+# print(makeBow(texts))
 
 
 # 4) Vytvořte funkci CosineDistance(vektorA, vektorB), která vypočítá kosinovou vzdálenost vektorů A a B
-# TODO - JEŠTĚ VERZE BEZ NUMPY
+def cosineDistanceNumpy (a, b):
+    numerator = sum(np.multiply(a, b))
+    denominator = np.multiply(np.sqrt(sum(np.power(a, 2))), np.sqrt(sum(np.power(b, 2))))
+    return(numerator / denominator)
+
+def cosineDistance(a, b):
+    numerator = m.suma(m.multiply(a, b))
+    denominator = math.sqrt(m.suma(m.powerList(a, 2))) * math.sqrt(m.suma(m.powerList(b, 2)))
+
+    return (numerator / denominator)
+
+class m:
+
+    def power(x, n):
+        return x**n
+
+    def powerList(c, b):
+        result = []
+        for num in c:
+            result.append(m.power(num, b))
+        return result
+
+    def suma(vector):
+        sum = 0
+        for i in vector:
+            sum += i
+        return sum
+
+    def multiply(list_a, list_b):
+        multiply_list = []
+        for num_a, num_b in zip(list_a, list_b):
+            multiply_list.append(num_a*num_b)
+        return multiply_list
 
 
-def cosineDistance (a, b):
-    citatel = sum(np.multiply(a, b))
-    jmenovatel = np.multiply(np.sqrt(sum(np.power(a, 2))), np.sqrt(sum(np.power(b, 2))))
-    return(citatel / jmenovatel)
+a = [3, 2, 1, 0, 0, 1]
+b = [2, 0, 1, 1, 9, 1]
 
-a = [0, 2, 1, 0]
-b = [0, 0, 1, 1]
-# print(cosineDistance(a,b))
 
-# Funguje to špatně s tímto vektorem, když mám v returnu to 1 - : a = [0, 2, 1, 0] b = [0, 0, 1, 1]
-# Kontrola
+# print(cosineDistance(a, b))
+# print(cosineDistanceNumpy(a, b))
+
+# # Kontrola
 # from scipy import spatial
 # print(1 - spatial.distance.cosine(a, b))
 
 
-# Alternativa pro np.multiply by mohl být for skrze zip() funkci
 
 
 # 5) Vytvořte funkci FolderToBoW, která načte všechny TXT soubory ze zadaného adresáře a vytvoří z nich bag-of-words model.
