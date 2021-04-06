@@ -4,7 +4,7 @@ from textEdits import getTokenizedList
 import numpy as np
 import re
 
-rawText = openFile("/Users/smutny/Documents/Coding/_github/Random-codes/Uni/Python/lyric.txt")
+rawText = openFile("/Users/smutny/Documents/Coding/_github/Random-codes/Uni/Python/texts/lyric.txt")
 
 
 
@@ -37,6 +37,8 @@ def getTokensFreqs(rawText):
  
     return freqTable
 
+# print(getTokensFreqs(rawText))
+
 # následně vytvořte funkci, která z tohoto výsledného slovníku vypočítá TTR (type-to-token ratio) neboli velikost slovníku / délka textu ve slovech, a to pomocí funkce CalcTTRFromDict(slovník)
 def CalcTTRFromDict(freqTable):
     freqTable = freqTable.items()
@@ -53,8 +55,8 @@ def CalcTTRFromDict(freqTable):
 
 
 # 3) Funkce MakeBow, která pro zadaný seznam textů zadaných pomocí dictionare obsahující jméno a text (viz příklad) vytvoří model Bag-Of-Words (popis viz níže):
-
-texts = [{"name": "text1", "data": "Já jsem vojta Ahoj ?? ahoj Vojta"},{"name": "text2", "data": "Já nejsem Vojta, ale mohl bych být"}]
+# TODO - Zkontrolovat výsledek, nevím jestli funguje
+texts = [{"name": "text1", "data": "Jsem jeseter Pepa"},{"name": "text2", "data": "Jsem jeseter Franta"},{"name": "text3", "data": "Nejsem jeseter Franta"}]
 
 def makeBow(texts):
     globalVocabulary = {}
@@ -85,8 +87,11 @@ def makeBow(texts):
     return texts
 
 
+print(makeBow(texts))
+
 
 # 4) Vytvořte funkci CosineDistance(vektorA, vektorB), která vypočítá kosinovou vzdálenost vektorů A a B
+# TODO - JEŠTĚ VERZE BEZ NUMPY
 
 
 def cosineDistance (a, b):
