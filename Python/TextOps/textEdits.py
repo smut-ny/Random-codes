@@ -1,50 +1,53 @@
 
 import re
 
-# Open txt file
-def openFile(fileNameString):
-    with open(fileNameString) as f:
+def openFile(path):
+    with open(path) as f:
         rawText = f.readlines()
     return rawText
 
-def sylabesNumCZ(word):
-    vocKonsonants = ""
-    sylabes = len(word)
-    vocalList = ["a", "á", "e", "é", "i", "í", "o", "u", "ú", "ů", "l", "r", "y", "ě"]
+
+def getSyllabesCZ(word):
+    vocals_konsonants = ""
+    syllabes = len(word)
+    vocals = ["a", "á", "e", "é", "i", "í", "o", "u", "ú", "ů", "l", "r", "y", "ě"]
+
     for character in word:
-        if character.lower() in vocalList:
+        if character.lower() in vocals:
             if character.lower() in "lr":
-                vocKonsonants += "W"
+                vocals_konsonants += "W"
             else:
-                vocKonsonants += "V"
+                vocals_konsonants += "V"
         else:
-            vocKonsonants += "K"
+            vocals_konsonants += "K"
     
-    #Sylabes and Konsonants operations
-    K = len(re.findall('K', vocKonsonants))
-    VV = len(re.findall('VV', vocKonsonants))
-    VWV = len(re.findall('VWV', vocKonsonants))
-    VW = len(re.findall('VW', vocKonsonants))
-    WV = len(re.findall('WV', vocKonsonants))
+    #Syllabes/konsonants placeholder operation
+    K = len(re.findall('K', vocals_konsonants))
+    VV = len(re.findall('VV', vocals_konsonants))
+    VWV = len(re.findall('VWV', vocals_konsonants))
+    VW = len(re.findall('VW', vocals_konsonants))
+    WV = len(re.findall('WV', vocals_konsonants))
 
     if K:
-        sylabes -= K
+        syllabes -= K
     if VV:
-        sylabes -= VV
+        syllabes -= VV
     if VWV:
-        sylabes -= VWV
+        syllabes -= VWV
     if VW:
-        sylabes -= VW
+        syllabes -= VW
     if WV:
-        sylabes -= WV
+        syllabes -= WV
     if WV and VW and VWV:
-        sylabes += VWV * 2
+        syllabes += VWV * 2
         
-    return sylabes
+    return syllabes
 
-def getTokenizedList(rawText):
+
+def getTokenizedList(plain_text):
     wordList = []
-    for line in rawText:
+
+    for line in plain_text:
         word = re.split('\W+', line.lower())
         wordList += word
     return wordList
