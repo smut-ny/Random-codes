@@ -184,7 +184,7 @@ def mujMap(tokeny, funct):
         map_result.append(funct_applied)
     return map_result
 
-print(mujMap(["laska", "hovinko", "zadek"], len))
+print(mujMap(["lapsus", "kapsus", "tropez"], len))
 
 # 8) Vytvořte analogickou funkci k MujMap: MujHromadnyMap, která pro zadaný seznam tokenů aplikuje seznam funkcí
 def mujHromadnyMap():
