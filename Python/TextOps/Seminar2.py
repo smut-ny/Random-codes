@@ -148,18 +148,19 @@ def mostSimilar(pathToFolder, fileName):
             if item in dict[dict_key_naming]:
                 return dict
 
+
     def addCosineDistancePair(dicts_list, dict_key_naming):
         for dict in dicts_list:
             similiarity = cosineDistance(chosen_bow[dict_key_naming], dict[dict_key_naming])
             dict["similiarity"] = similiarity
         return dicts_list
     
+
     def maxValue(dicts_list, dict_key):
         sequence = [dict[dict_key] for dict in dicts_list]
         maxValue = max(sequence)
         maxValueIndex = sequence.index(maxValue)
         return dicts_list[maxValueIndex]
-
 
     all_bows = folderToBoW(pathToFolder)
     chosen_bow_name = pathToFolder + fileName
@@ -173,10 +174,17 @@ def mostSimilar(pathToFolder, fileName):
 
     return max_value_bow["name"]
 
-print(mostSimilar("assets/", "lyric.txt"))
+# print(mostSimilar("assets/", "lyric.txt"))
+
 # 7) Funkce MujMap(tokeny, funkceKAplikaci), které zadáváme seznam tokenů a referenci na funkci. Funkce MujMap vrací seznam tokenů po aplikaci funkce funkceKAplikac
-def mujMap():
-    pass
+def mujMap(tokeny, funct):
+    map_result = []
+    for i in tokeny:
+        funct_applied = funct(i)
+        map_result.append(funct_applied)
+    return map_result
+
+print(mujMap(["laska", "hovinko", "zadek"], len))
 
 # 8) Vytvořte analogickou funkci k MujMap: MujHromadnyMap, která pro zadaný seznam tokenů aplikuje seznam funkcí
 def mujHromadnyMap():
