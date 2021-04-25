@@ -184,11 +184,27 @@ def mujMap(tokeny, funct):
         map_result.append(funct_applied)
     return map_result
 
-print(mujMap(["lapsus", "kapsus", "tropez"], len))
+# print(mujMap(["lapsus", "kapsus", "tropez"], len))
+
+#Co kdybych chtěl volat built in metodu? try/except?
+
 
 # 8) Vytvořte analogickou funkci k MujMap: MujHromadnyMap, která pro zadaný seznam tokenů aplikuje seznam funkcí
-def mujHromadnyMap():
-    pass
+def mujHromadnyMap(map_list, functs_list):
+    map_items = map_list
+
+    for funct in functs_list:
+        result = mujMap(map_items, funct)
+        map_items = result
+
+    return map_items
+
+
+    
+def vynasobDeseti(number):
+    return number * 10
+print(mujHromadnyMap(["lapsus", "kapsus", "tropez"], [len, vynasobDeseti]))
+
 
 # 9) Vytvořte funkci MakeTestTrain(dataset, ratio), která pro zadaný seznam kategorií (uvedené v prvním prvku n-tice) vytvoří přípravu na trénovací a testovací datasety v zadaném poměru ratio. Výstupem funkce je dictionare se dvěma klíči: train a test, které jsou seznamy vybraných n-tic dle kategorií pro train a test datasety. Poměr ratio určuje poměr velikosti trénovacího vůči testovacímu datasetu.  Každá kategorie musí být v obou datasetech (train i test) zastoupeny shodně (viz dále).
 def makeTestTrain():
