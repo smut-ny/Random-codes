@@ -127,7 +127,7 @@ b = [2, 0, 1, 1, 9, 1]
 
 def folderToBoW(path):
     import glob 
-    texts = glob.glob(path + "*.txt")
+    texts = glob.glob(path + "*.txt") #Os join
     texts_dict = {}
     texts_list = []
 
@@ -138,7 +138,50 @@ def folderToBoW(path):
     
     return makeBow(texts_list)
 
+# print(folderToBoW("assets/"))
 
 
+# 6) Vytvořte funkci MostSimilar(bow, fileName), která pro zadaný bag-of-words získaný pomocí úlohy (5) a zadaného jména souboru z něj najde k němu nejpodobnější text.
+def mostSimilar(pathToFolder, fileName):
+    def getDictItem(dicts_list, item, dict_key_naming):
+        for dict in dicts_list:
+            if item in dict[dict_key_naming]:
+                return dict
 
+    def addCosineDistancePair(dicts_list, dict_key_naming):
+        for dict in dicts_list:
+            similiarity = cosineDistance(chosen_bow[dict_key_naming], dict[dict_key_naming])
+            dict["similiarity"] = similiarity
+        return dicts_list
     
+    def maxValue(dicts_list, dict_key):
+        sequence = [dict[dict_key] for dict in dicts_list]
+        maxValue = max(sequence)
+        maxValueIndex = sequence.index(maxValue)
+        return dicts_list[maxValueIndex]
+
+
+    all_bows = folderToBoW(pathToFolder)
+    chosen_bow_name = pathToFolder + fileName
+
+    chosen_bow = getDictItem(all_bows, chosen_bow_name, "name")
+    all_bows.remove(chosen_bow)
+    all_bows_with_similiarity = addCosineDistancePair(all_bows, "data")
+
+    max_value_bow = maxValue(all_bows_with_similiarity, "similiarity")
+
+
+    return max_value_bow["name"]
+
+print(mostSimilar("assets/", "lyric.txt"))
+# 7) Funkce MujMap(tokeny, funkceKAplikaci), které zadáváme seznam tokenů a referenci na funkci. Funkce MujMap vrací seznam tokenů po aplikaci funkce funkceKAplikac
+def mujMap():
+    pass
+
+# 8) Vytvořte analogickou funkci k MujMap: MujHromadnyMap, která pro zadaný seznam tokenů aplikuje seznam funkcí
+def mujHromadnyMap():
+    pass
+
+# 9) Vytvořte funkci MakeTestTrain(dataset, ratio), která pro zadaný seznam kategorií (uvedené v prvním prvku n-tice) vytvoří přípravu na trénovací a testovací datasety v zadaném poměru ratio. Výstupem funkce je dictionare se dvěma klíči: train a test, které jsou seznamy vybraných n-tic dle kategorií pro train a test datasety. Poměr ratio určuje poměr velikosti trénovacího vůči testovacímu datasetu.  Každá kategorie musí být v obou datasetech (train i test) zastoupeny shodně (viz dále).
+def makeTestTrain():
+    pass
