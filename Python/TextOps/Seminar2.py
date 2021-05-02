@@ -142,45 +142,52 @@ def folderToBoW(path):
 
 
 # 6) Vytvořte funkci MostSimilar(bow, fileName), která pro zadaný bag-of-words získaný pomocí úlohy (5) a zadaného jména souboru z něj najde k němu nejpodobnější text.
-def mostSimilar(pathToFolder, fileName):
-    def getDictItem(dicts_list, item, dict_key_naming):
-        for dict in dicts_list:
-            if item in dict[dict_key_naming]:
+def mostSimilar(pathToFolder, targetFileName):
+    import os
+    
+    def getDictItem(list_of_dicts, target_dict, dict_key_file_name):
+        for dict in list_of_dicts:
+            if target_dict in dict[dict_key_file_name]:
                 return dict
 
 
-    def addCosineDistancePair(dicts_list, dict_key_naming):
-        for dict in dicts_list:
-            similiarity = cosineDistance(chosen_bow[dict_key_naming], dict[dict_key_naming])
+    def addCosineDistanceAsDictKey(list_of_dicts, dict_key_bow_data):
+        for dict in list_of_dicts:
+            similiarity = cosineDistance(target_bow[dict_key_bow_data], dict[dict_key_bow_data])
+
+            #adds similiarity calculation as a new key to existing dictionare
             dict["similiarity"] = similiarity
-        return dicts_list
+        return list_of_dicts
     
 
-    def maxValue(dicts_list, dict_key):
-        sequence = [dict[dict_key] for dict in dicts_list]
-        maxValue = max(sequence)
-        maxValueIndex = sequence.index(maxValue)
-        return dicts_list[maxValueIndex]
+    def getMaxDictValue(list_of_dicts, dict_key_similiarity):
+        list_of_similiarity = [dict[dict_key_similiarity] for dict in list_of_dicts]
+        max_value_in_list = max(list_of_similiarity)
+        max_value_list_index = list_of_similiarity.index(max_value_in_list)
+        return list_of_dicts[max_value_list_index]
 
-    all_bows = folderToBoW(pathToFolder)
-    chosen_bow_name = pathToFolder + fileName
+    bows_dict_list = folderToBoW(pathToFolder)
+    target_file_dict_key_name = os.path.join(pathToFolder, targetFileName)
 
-    chosen_bow = getDictItem(all_bows, chosen_bow_name, "name")
-    all_bows.remove(chosen_bow)
-    all_bows_with_similiarity = addCosineDistancePair(all_bows, "data")
+    target_bow = getDictItem(bows_dict_list, target_file_dict_key_name, "name")
+    bows_dict_list.remove(target_bow)
+    bows_with_similiarity_key = addCosineDistanceAsDictKey(bows_dict_list, "data")
 
-    max_value_bow = maxValue(all_bows_with_similiarity, "similiarity")
-
-
-    return max_value_bow["name"]
+    bow_with_max_similiarity_value = getMaxDictValue(bows_with_similiarity_key, "similiarity")
+    
+    return bow_with_max_similiarity_value["name"]
 
 # print(mostSimilar("assets/", "lyric.txt"))
+
+# 
+# DATA STRUCTURE:
+# [{'name': 'assets/3.txt', 'data': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'similiarity': 0.0}, {'name': 'assets/2.txt', 'data': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'similiarity': 0.23904572186687878}, {'name': 'assets/1.txt', 'data': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'similiarity': 0.0}])
 
 # 7) Funkce MujMap(tokeny, funkceKAplikaci), které zadáváme seznam tokenů a referenci na funkci. Funkce MujMap vrací seznam tokenů po aplikaci funkce funkceKAplikac
 def mujMap(tokeny, funct):
     map_result = []
-    for i in tokeny:
-        funct_applied = funct(i)
+    for token in tokeny:
+        funct_applied = funct(token)
         map_result.append(funct_applied)
     return map_result
 
@@ -201,11 +208,70 @@ def mujHromadnyMap(map_list, functs_list):
 
 
     
-def vynasobDeseti(number):
-    return number * 10
-print(mujHromadnyMap(["lapsus", "kapsus", "tropez"], [len, vynasobDeseti]))
+# def vynasobDeseti(number): return number * 10
+# print(mujHromadnyMap(["lapsus", "kapsus", "tropez"], [len, vynasobDeseti]))
 
 
 # 9) Vytvořte funkci MakeTestTrain(dataset, ratio), která pro zadaný seznam kategorií (uvedené v prvním prvku n-tice) vytvoří přípravu na trénovací a testovací datasety v zadaném poměru ratio. Výstupem funkce je dictionare se dvěma klíči: train a test, které jsou seznamy vybraných n-tic dle kategorií pro train a test datasety. Poměr ratio určuje poměr velikosti trénovacího vůči testovacímu datasetu.  Každá kategorie musí být v obou datasetech (train i test) zastoupeny shodně (viz dále).
-def makeTestTrain():
+
+data = [("pes", 1), ("pes", 2), ("pes", 3), ("pes", 4), ("pes", 5), ("jezevec", 1), ("jezevec", 2), ("jezevec", 3), ("jezevec", 4), ("kočka", 1), ("kočka", 2), ("kočka", 3)]
+
+
+def makeTestTrain(dataset, ratio):
     pass
+
+
+# Nejméně četná kategorie??
+def getMinItemCount(list_of_tuples):
+    from collections import Counter
+
+    list_of_elements = []
+
+    for tuple in list_of_tuples:
+        list_of_elements.append(tuple[0])
+
+    list_of_elements_counter = Counter(list_of_elements).items()
+    return min(list_of_elements_counter, key = lambda numb: numb[1])
+
+
+# Get all names
+def getUniqueNames(list_of_tuples):
+    storage = set()
+    for item in list_of_tuples:
+        storage.add(item[0])
+    return storage
+
+        
+min_occurances_in_list = getMinItemCount(data)
+set_of_names = getUniqueNames(data)
+ratio = 2/3
+
+
+# Pro každé jméno funkce, co rozdělí list
+
+def splitTrainTest(ratio, list_of_tuples):
+    train = []
+    test = []
+
+    rest = 1 - ratio
+    baseline_test = min_occurances_in_list[1] * ratio
+    baseline_train = min_occurances_in_list[1] * rest
+
+    print(baseline_test, baseline_train)
+
+    for name in list_of_tuples:
+        if name[1] > baseline_test:
+            test.append(name) 
+        elif name[1] < baseline_train:
+            train.append(name)
+
+    return train, test
+data_pes = ("pes", 1), ("pes", 2), ("pes", 3), ("pes", 4), ("pes", 5)
+print(splitTrainTest(ratio, data_pes))
+
+
+
+
+
+# print(makeTestTrain(data, 20))
+
