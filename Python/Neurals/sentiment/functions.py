@@ -1,6 +1,6 @@
 import os
 import re
-
+import fasttext
 
 def remove_empty_lists(list_data):
    return [ele for ele in list_data if ele != []]
