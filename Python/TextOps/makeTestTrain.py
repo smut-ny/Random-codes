@@ -1,64 +1,125 @@
-# 9) Vytvořte funkci MakeTestTrain(dataset, ratio), která pro zadaný seznam kategorií (uvedené v prvním prvku n-tice) vytvoří přípravu na trénovací a testovací datasety v zadaném poměru ratio. Výstupem funkce je dictionare se dvěma klíči: train a test, které jsou seznamy vybraných n-tic dle kategorií pro train a test datasety. Poměr ratio určuje poměr velikosti trénovacího vůči testovacímu datasetu.  Každá kategorie musí být v obou datasetech (train i test) zastoupeny shodně (viz dále).
+#příliš mnoho forů, result na začátek, 
+
+
+
 import math
+from collections import Counter
+
 data = [("pes", 1), ("pes", 2), ("pes", 3), ("pes", 4), ("pes", 5), ("jezevec", 1), ("jezevec", 2), ("jezevec", 3), ("jezevec", 4), ("kočka", 1), ("kočka", 2), ("kočka", 3)]
 
+# Alternative random data verification ------------------------>
 
-def makeTestTrain(list_of_tuples, ratio):
+def data_generator(list_of_features, times, random_rat):
+    from random import randrange
+    storage = []
+    rand = 1
 
-    def getMinItemCount(list_of_tuples):
-        from collections import Counter
+    if random_rat == True:
+        rand = randrange(1, 9)
 
-        list_of_elements = []
+
+    for name in list_of_features:
+        # Resets
+        id = 0
+        tuple_item = ()
+        for i in range(0, int(times / rand)):
+            id += 1
+            tuple_item = (name, id)
+            storage.append(tuple_item)
+    
+    return storage
+
+data2 = data_generator(["habanero", "jalapeno", "nagaJolokia", "bhutJolokia"], 400, True)
+# <--------------
+
+
+def makeTestTrain(data_to_split, ratio):
+
+
+    def getMinOccurrenceItemInList(list_of_tuples):
+        all_items_list = []
 
         for tuple in list_of_tuples:
-            list_of_elements.append(tuple[0])
+            all_items_list.append(tuple[0])
 
-        list_of_elements_counter = Counter(list_of_elements).items()
-        return min(list_of_elements_counter, key = lambda numb: numb[1])
+        unique_items_counted = Counter(all_items_list).items()
+
+        return min(unique_items_counted, key = lambda number: number[1])
 
 
-    def getFeatureNames(list_of_tuples):
-        storage = set()
+    def getUniqueNames(list_of_tuples):
+        unique_names = set()
+
         for item in list_of_tuples:
-            storage.add(item[0])
-        return storage
+            unique_names.add(item[0])
+
+        return unique_names
     
-    def splitTrainTestFunc(feature, test_limit, max_limit):
-        for name in feature:
-            if name[1] <= test_limit:
-                test.append(name) 
-            elif name[1] <= max_limit:
-                train.append(name)
+    def splitTrainTestFunc(data_to_split, test_limit, max_limit):
+        train_after_split = []
+        test_after_split = []
+
+        for item_id in data_to_split:
+
+            if item_id[1] <= test_limit:
+                test_after_split.append(item_id) 
+            elif item_id[1] <= max_limit:
+                train_after_split.append(item_id)
         
-        return test, train
+        return test_after_split, train_after_split
 
-    def splitTrainTestPerFeature(set_of_names):
-        feature_list = []
+    def splitTrainTestPerItem(list_of_tuples, set_of_names):
+        list_of_unique_items = []
+
         for name in set_of_names:
-            for i in data:
-                if i[0] == name:
-                    feature_list.append(i)
-        return splitTrainTestFunc(feature_list, baseline_test, max_data)
+
+            for item in list_of_tuples:
+
+                if item[0] == name:
+                    list_of_unique_items.append(item)
+
+        return splitTrainTestFunc(list_of_unique_items, baseline_test, split_max_borderline)
 
 
-    min_occurances_in_list = getMinItemCount(data)
-    set_of_names = getFeatureNames(data)
+    min_occurances_in_list = getMinOccurrenceItemInList(data_to_split)
+    set_of_unique_items = getUniqueNames(data_to_split)
 
-    rest = 1 - ratio
     baseline_test = math.floor(min_occurances_in_list[1] * ratio)
-    baseline_train = math.floor(min_occurances_in_list[1] * rest)
-    max_data = baseline_test + baseline_train
+    baseline_train = math.floor(min_occurances_in_list[1] * (1 - ratio))
 
+    split_max_borderline = baseline_test + baseline_train
 
-    train = []
-    test = []
+ 
+    train_test_split_return = []
     
-    splitTrainTestPerFeature(set_of_names)
+    train_test_split_return = splitTrainTestPerItem(data_to_split, set_of_unique_items)
 
 
-    return train, test
+    return train_test_split_return
+
+print("\n Kočka, pes, jezevec:")
+print(makeTestTrain(data, 2/3))
 
 
 
 
-print(makeTestTrain(data, 1/3))
+# Alternative random data verification ------------------------>
+print("\n Alternative data SUM:")
+def validateSplit(input):
+    
+    validation = []
+    tuple_list = []
+    
+    for test_train_list in input:
+        for tuple in test_train_list:
+            tuple_list.append(tuple[0])
+            
+        sum_all_items = Counter(tuple_list).items()
+
+        validation.append(sum_all_items)
+        
+    return validation       
+
+fin = makeTestTrain(data2, 2/3)
+print(validateSplit(fin))
+# <--------------
