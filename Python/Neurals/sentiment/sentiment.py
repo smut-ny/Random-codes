@@ -11,7 +11,7 @@ Load files into dataframe
 
 
 Required structure:
-1, 2, 3: BAD, GOOD, NEUTRAL
+1, 2: BAD, GOOD
 
 {
     file_name: 9.txt
@@ -25,12 +25,15 @@ Required structure:
 
 
 """
+
 dataset_relative_path = "dataset"
 subdir_paths = get_subdir_names_and_files(dataset_relative_path)[0] #[1] would get txt file names
 
 dataframe = get_dataframe_in_subfolders(subdir_paths)
 dataframe = get_tokens_id_input_to_dataframe(dataframe, "plain_text", "folder_name", "file_name")
-print(dataframe)
 
-# ADD ID
-# ADD INPUT (1, 2, 3)
+pd_dataframe_bad = pd.DataFrame.from_dict(dataframe[0])
+pd_dataframe_good = pd.DataFrame.from_dict(dataframe[1])
+
+print(pd_dataframe_bad, pd_dataframe_good)
+

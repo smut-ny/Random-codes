@@ -59,11 +59,11 @@ def get_tokenized_list(plain_text):
 
 def get_target_value(folder_name):
     if folder_name == "dataset/BAD":
-        return 1
+        return 0
     elif folder_name == "dataset/GOOD":
-        return 2
+        return 1
     else:
-        return 3
+        return 2
 
 def del_filename_extension(filename, extension):
     return re.sub(extension, "", filename)
