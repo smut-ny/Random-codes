@@ -1,5 +1,7 @@
 import os
+from pyexpat import model
 import re
+from sqlite3 import DatabaseError
 import fasttext
 
 def remove_empty_lists(list_data):
@@ -76,3 +78,22 @@ def get_tokens_id_input_to_dataframe(dataframe, plain_text_key, folder_key, file
             data["text_id"] = del_filename_extension(data[filename_key], ".txt")
 
     return dataframe
+
+def get_word_embeddings(dataframe):
+
+    model = fasttext.load_model("cc.en.300.bin")
+
+    for data_block in dataframe:
+        for data in data_block:
+            vector = []
+
+            for word in data["tokenized_text"]:
+                word_embedding = model[word]
+
+                vector.append(word_embedding)
+                    
+            data["word_embeddings"] = vector
+    
+    return dataframe
+                
+        
