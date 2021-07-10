@@ -79,7 +79,7 @@ def lemmatize_and_remove_punct_stops(text):
     doc = nlp(text)
 
     tokenized_text = []
-    remove_trash = ['\n', '`', 've', '-LRB-', '-RRB-', '-rrb-']
+    remove_trash = ['\n', '`', 've', '-LRB-', '-lrb-', '-RRB-', '-rrb-']
 
     for token in doc:
         if not token.is_punct and not token.is_stop and token.lemma_ not in remove_trash:
