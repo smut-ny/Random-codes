@@ -31,3 +31,4 @@ Uni/Python/.vscode/settings.json
 Python/Neurals/sentiment/wiki-news-300d-1M.vec
 Python/Neurals/sentiment/cc.en.300.bin.gz
 Python/Neurals/sentiment/cc.en.300.bin
+Python/Neurals/sentiment/processed_dataframe.pkl

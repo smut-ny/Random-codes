@@ -84,9 +84,9 @@ def get_word_embeddings(word):
 
 def get_sentence_embedding(sentence_embeddings):
     if len(sentence_embeddings) > 1:
-        return np.array(np.mean(sentence_embeddings, axis = 0))
+        return np.mean(sentence_embeddings, axis = 0).flatten()
     else:
-        return np.array(sentence_embeddings)
+        return np.array(sentence_embeddings).flatten()
 
 def del_filename_extension(filename, extension):
     return re.sub(extension, "", filename)
@@ -116,3 +116,11 @@ def get_custom_columns(dataframe, plain_text_key, folder_key, filename_key):
     return dataframe
 
         
+def remove_empty_columns(dataframe, column_name_to_check):
+    rows_to_remove = []
+    
+    for i in enumerate(dataframe[column_name_to_check]):
+        if len(i[1]) == 0:
+            rows_to_remove.append(i[0])
+        
+    return dataframe.drop(rows_to_remove)
