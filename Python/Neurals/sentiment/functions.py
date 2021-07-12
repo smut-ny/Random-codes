@@ -111,6 +111,7 @@ def get_custom_columns(dataframe, plain_text_key, folder_key, filename_key):
             data["text_id"] = del_filename_extension(data[filename_key], ".txt")
             data["word_embdeddings"] = get_word_embeddings_from_list(data["cleaned_text"])
             data["sentence_embedding"] = get_sentence_embedding(data["word_embdeddings"])
+            data["sentence_embedding_mean"] = np.mean(data["sentence_embedding"])
 
     return dataframe
 
