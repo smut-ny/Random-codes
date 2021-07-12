@@ -20,8 +20,10 @@ pd_dataframe_good = pd.DataFrame.from_dict(dataframe[1])
 
 df = pd_dataframe_bad.append(pd_dataframe_good, ignore_index = True)
 
-# Export to csv
+# Exports
 df.to_csv('processed_dataframe.csv')
+df.to_pickle('processed_dataframe.pkl')
+
 
 
 

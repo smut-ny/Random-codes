@@ -5,8 +5,11 @@ import pandas as pd
 from sqlite3 import DatabaseError
 from bleach import clean
 import spacy
+import fasttext
+import numpy as np
 
 nlp = spacy.load("en_core_web_sm")
+model = fasttext.load_model("cc.en.300.bin")
 
 def remove_empty_lists(list_data):
    return [ele for ele in list_data if ele != []]
@@ -70,6 +73,20 @@ def get_target_value(folder_name):
         return 1
     else:
         return 2
+def get_word_embeddings_from_list(tokenized_text_list):
+    output_list = []
+    for word in tokenized_text_list:
+        output_list.append(get_word_embeddings(word))
+    return output_list
+
+def get_word_embeddings(word):
+    return model[word]
+
+def get_sentence_embedding(sentence_embeddings):
+    if len(sentence_embeddings) > 1:
+        return np.array(np.mean(sentence_embeddings, axis = 0))
+    else:
+        return np.array(sentence_embeddings)
 
 def del_filename_extension(filename, extension):
     return re.sub(extension, "", filename)
@@ -92,6 +109,8 @@ def get_custom_columns(dataframe, plain_text_key, folder_key, filename_key):
             data["cleaned_text"] = lemmatize_and_remove_punct_stops(data[plain_text_key]) #Main Spacy pipeline function
             data["input"] = get_target_value(data[folder_key])
             data["text_id"] = del_filename_extension(data[filename_key], ".txt")
+            data["word_embdeddings"] = get_word_embeddings_from_list(data["cleaned_text"])
+            data["sentence_embedding"] = get_sentence_embedding(data["word_embdeddings"])
 
     return dataframe
 
